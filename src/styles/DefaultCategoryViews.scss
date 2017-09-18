@@ -1,0 +1,11 @@
+.default-category-views-category {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px;
+
+  &:hover {
+    background-color: white;
+    border-radius: 5px;
+    color: #009688 !important;
+  }
+}
