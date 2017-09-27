@@ -6,3 +6,14 @@
     background-color: white;
     border-radius: 5px;
     color: #009688 !important; }
+
+.default-category-views-category-active {
+  background-color: white;
+  border-radius: 5px;
+  color: #009688 !important; }
+
+.default-category-views-filter {
+  padding-top: 20px !important;
+  padding-bottom: 0px !important; }
+  .default-category-views-filter .default-category-views-add-post-icon {
+    padding-right: 10px; }

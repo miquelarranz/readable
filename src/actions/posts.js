@@ -13,3 +13,14 @@ export const fetchPosts = () => dispatch => (
       .fetchPosts()
       .then(posts => dispatch(receivePosts(posts)))
 );
+
+export const receivePostsByCategory = posts => ({
+  type: RECEIVE_POSTS_BY_CATEGORY,
+  posts
+});
+
+export const fetchPostsByCategory = (category) => dispatch => (
+  PostsAPI
+      .fetchPostsByCategory(category)
+      .then(posts => dispatch(receivePostsByCategory(posts)))
+);
