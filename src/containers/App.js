@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import DefaultView from './DefaultView';
+import PostView from './PostView';
 
 class App extends Component {
 
@@ -19,7 +20,9 @@ class App extends Component {
         <div className="app">
           <Route exact path="/" component={ DefaultView }/>
 
-          <Route path="/:category" component={ DefaultView }/>
+          <Route exact path="/:category" component={ DefaultView }/>
+
+          <Route path="/post/:postId" component={ PostView }/>
         </div>
       </div>
     );

@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import _ from 'lodash'
+
 import { fetchCategories } from '../actions/categories.js'
 import { fetchPosts, fetchPostsByCategory } from '../actions/posts.js'
-import '../styles/DefaultCategoryViews.css';
+
 import PostsList from '../components/PostsList'
-import _ from 'lodash'
+import CreatePostModal from '../components/CreatePostModal'
+
+import '../styles/DefaultView.css';
 
 class DefaultView extends Component {
 	state = {
-		filter: 'voteScore'
+		filter: 'voteScore',
+		createPostModalOpened: false
 	}
 
   componentDidMount() {
@@ -25,10 +30,14 @@ class DefaultView extends Component {
 		const { fetchPosts, fetchPostsByCategory, match } = this.props
 
 		if (nextProps.match.params.category !== match.params.category) {
-			if (match.params.category) fetchPostsByCategory(match.params.category)
+			if (nextProps.match.params.category) fetchPostsByCategory(nextProps.match.params.category)
 			else fetchPosts()
 		}
 	}
+
+	openCreatePostModal = () => this.setState(() => ({ createPostModalOpened: true }))
+
+  closeCreatePostModal = () => this.setState(() => ({ createPostModalOpened: false }))
 
 	changeFilter(filter) {
 		this.setState({ filter })
@@ -36,9 +45,11 @@ class DefaultView extends Component {
 
   render() {
 		const { categories, posts, match } = this.props
-		const { filter } = this.state
+		const { filter, createPostModalOpened } = this.state
 
-		let orderedPosts = _.reverse(_.sortBy(posts, filter))
+		let availablePosts = posts.filter((post) => !post.delete)
+
+		let orderedPosts = _.reverse(_.sortBy(availablePosts, filter))
 
     return (
 			<div>
@@ -47,7 +58,7 @@ class DefaultView extends Component {
 	          <div className="container">
 							{categories.map((category, key) => (
 								<span key={key}>
-									<Link className={"default-category-views-category " + (((match.params.category == category.path) || (!match.params.category && category.path == "/")) ? "default-category-views-category-active" : "")} to={category.path}>{category.name}</Link>
+									<Link className={"default-view-category " + (((match.params.category === category.path) || (!match.params.category && category.path === "/")) ? "default-view-category-active" : "")} to={category.path}>{category.name}</Link>
 									<span>|</span>
 								</span>
 							))}
@@ -55,7 +66,7 @@ class DefaultView extends Component {
 	        </div>
 	      </section>
 
-				<section className="section default-category-views-filter">
+				<section className="section default-view-filter">
 		    	<div className="container">
 						<article className="media">
 							<div className="media-left">
@@ -68,8 +79,8 @@ class DefaultView extends Component {
 							<div className="media-content">
 							</div>
 							<div className="media-right">
-								<button className="button is-success">
-									<i className="fa fa-plus default-category-views-add-post-icon"></i>
+								<button onClick={() => this.openCreatePostModal()} className="button is-success">
+									<i className="fa fa-plus default-view-add-post-icon"></i>
 									<b>Add Post</b>
 								</button>
 							</div>
@@ -78,6 +89,9 @@ class DefaultView extends Component {
 				</section>
 
 				<PostsList posts={orderedPosts}></PostsList>
+
+				<CreatePostModal status={createPostModalOpened} closeCreatePostModal={this.closeCreatePostModal} mode="add"></CreatePostModal>
+
 			</div>
     );
   }

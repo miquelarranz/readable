@@ -1,19 +1,19 @@
-.default-category-views-category {
+.default-view-category {
   margin-left: 20px;
   margin-right: 20px;
   padding: 10px; }
-  .default-category-views-category:hover {
+  .default-view-category:hover {
     background-color: white;
     border-radius: 5px;
     color: #009688 !important; }
 
-.default-category-views-category-active {
+.default-view-category-active {
   background-color: white;
   border-radius: 5px;
   color: #009688 !important; }
 
-.default-category-views-filter {
+.default-view-filter {
   padding-top: 20px !important;
   padding-bottom: 0px !important; }
-  .default-category-views-filter .default-category-views-add-post-icon {
+  .default-view-filter .default-view-add-post-icon {
     padding-right: 10px; }
