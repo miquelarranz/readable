@@ -40,3 +40,10 @@ export function deletePost (postId) {
     'http://localhost:3001/posts/' + postId, {method: 'delete', headers: { 'Authorization': 'Readable' }})
     .then((res) => res.json())
 }
+
+export function votePost (postId, option) {
+
+  return fetch(
+    'http://localhost:3001/posts/' + postId, {method: 'post', body: JSON.stringify({ option }), headers: { 'Authorization': 'Readable', 'Content-Type': 'application/json'}})
+    .then((res) => res.json())
+}

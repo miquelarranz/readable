@@ -7,8 +7,9 @@ import moment from 'moment'
 
 import { fetchPost, deletePost } from '../actions/posts.js'
 
-import CreatePostModal from '../components/CreatePostModal'
-import CommentsList from '../components/CommentsList'
+import CreatePostModal from '../containers/CreatePostModal'
+import CommentsList from '../containers/CommentsList'
+import PostVoter from '../containers/PostVoter'
 
 import '../styles/PostView.css';
 
@@ -70,12 +71,10 @@ class PostView extends Component {
 		    	<div className="container">
 						<article className="media">
 							<div className="media-left">
-								<small className="has-text-primary">{post.voteScore}</small>
+								<PostVoter voteScore={post.voteScore} postId={post.id}></PostVoter>
 							</div>
 							<div className="media-content"></div>
 							<div className="media-right">
-								<a className="button is-small is-success" onClick={() => this.openEditPostModal()}>Edit</a>
-								<a className="button is-small is-link" onClick={() => this.deletePost()}>Delete</a>
 							</div>
 						</article>
 
@@ -94,6 +93,8 @@ class PostView extends Component {
 						</article>
 
 						<hr></hr>
+
+						<CommentsList postId={post.id}></CommentsList>
 
 						<CreatePostModal status={editPostModalOpened} closeCreatePostModal={this.closeEditPostModal} data={post} mode="edit"></CreatePostModal>
 

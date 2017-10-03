@@ -4,16 +4,36 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-import { fetchCategories } from '../actions/categories.js'
-import { fetchPosts } from '../actions/posts.js'
+import { deletePost } from '../actions/posts.js'
+
+import PostVoter from '../containers/PostVoter'
+import CreatePostModal from '../containers/CreatePostModal'
 
 class PostsList extends Component {
   static propTypes = {
     posts: PropTypes.array.isRequired
   }
 
+  state = {
+    editPostModalOpened: false,
+    selectedPost: {}
+  }
+
+  openEditPostModal = (post) => this.setState(() => ({ editPostModalOpened: true, selectedPost: post }))
+
+  closeEditPostModal = () => this.setState(() => ({ editPostModalOpened: false }))
+
+  deletePost = (postId) => {
+		const { deletePost } = this.props
+
+		deletePost(postId)
+	}
+
   render() {
 		const { posts } = this.props
+		const { selectedPost, editPostModalOpened } = this.state
+
+    var post
 
     return (
 			<section className="section">
@@ -22,11 +42,11 @@ class PostsList extends Component {
 						<div key={key} className="box">
 						  <article className="media">
 						    <div className="media-left">
-						      {post.voteScore}
+						      <PostVoter voteScore={post.voteScore} postId={post.id}></PostVoter>
 						    </div>
 						    <div className="media-content">
 						      <div className="content">
-                    <Link key={key} to={"post/" + post.id}>
+                    <Link key={key} to={post.category + "/" + post.id}>
   						        <p>
   											<span>{post.title}</span> <small className="has-text-grey-light">by {post.author}</small>
   						        </p>
@@ -34,11 +54,14 @@ class PostsList extends Component {
 						      </div>
 						    </div>
 								<div className="media-right">
-						       <small className="has-text-grey-light">{moment(post.timestamp).fromNow()}</small>
+						       <small className="has-text-grey-light"><a onClick={() => this.openEditPostModal(post)}>Edit</a> · <a onClick={() => this.deletePost(post.id)}>Delete</a> · {moment(post.timestamp).fromNow()}</small>
 						    </div>
 						  </article>
 						</div>
 					))}
+
+          <CreatePostModal status={editPostModalOpened} closeCreatePostModal={this.closeEditPostModal} data={selectedPost} mode="edit"></CreatePostModal>
+
 				</div>
 			</section>
     );
@@ -53,8 +76,7 @@ function mapStateToProps () {
 
 function mapDispatchToProps (dispatch) {
   return {
-    fetchCategories: (data) => dispatch(fetchCategories()),
-    fetchPosts: (data) => dispatch(fetchPosts())
+    deletePost: (postId) => dispatch(deletePost(postId))
   }
 }
 

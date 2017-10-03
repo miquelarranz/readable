@@ -6,8 +6,8 @@ import _ from 'lodash'
 import { fetchCategories } from '../actions/categories.js'
 import { fetchPosts, fetchPostsByCategory } from '../actions/posts.js'
 
-import PostsList from '../components/PostsList'
-import CreatePostModal from '../components/CreatePostModal'
+import PostsList from '../containers/PostsList'
+import CreatePostModal from '../containers/CreatePostModal'
 
 import '../styles/DefaultView.css';
 

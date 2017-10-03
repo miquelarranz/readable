@@ -22,7 +22,7 @@ class App extends Component {
 
           <Route exact path="/:category" component={ DefaultView }/>
 
-          <Route path="/post/:postId" component={ PostView }/>
+          <Route path="/:category/:postId" component={ PostView }/>
         </div>
       </div>
     );
