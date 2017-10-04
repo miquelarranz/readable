@@ -7,6 +7,10 @@ import { voteComment } from '../actions/comments.js'
 import '../styles/Voter.css'
 
 class CommentVoter extends Component {
+  static propTypes = {
+    voteScore: PropTypes.number.isRequired,
+    commentId: PropTypes.string.isRequired
+  }
 
   render() {
     const { voteScore, commentId, voteComment } = this.props

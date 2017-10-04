@@ -7,7 +7,7 @@ import { fetchCategories } from '../actions/categories.js'
 import { fetchPosts, fetchPostsByCategory } from '../actions/posts.js'
 
 import PostsList from '../containers/PostsList'
-import CreatePostModal from '../containers/CreatePostModal'
+import PostModal from '../containers/PostModal'
 
 import '../styles/DefaultView.css';
 
@@ -47,9 +47,7 @@ class DefaultView extends Component {
 		const { categories, posts, match } = this.props
 		const { filter, createPostModalOpened } = this.state
 
-		let availablePosts = posts.filter((post) => !post.delete)
-
-		let orderedPosts = _.reverse(_.sortBy(availablePosts, filter))
+		let orderedPosts = _.reverse(_.sortBy(posts, filter))
 
     return (
 			<div>
@@ -90,7 +88,7 @@ class DefaultView extends Component {
 
 				<PostsList posts={orderedPosts}></PostsList>
 
-				<CreatePostModal status={createPostModalOpened} closeCreatePostModal={this.closeCreatePostModal} mode="add"></CreatePostModal>
+				<PostModal status={createPostModalOpened} closePostModal={this.closeCreatePostModal} mode="add"></PostModal>
 
 			</div>
     );

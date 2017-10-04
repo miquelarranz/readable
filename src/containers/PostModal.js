@@ -8,12 +8,14 @@ import uuidv4 from 'uuid/v4'
 import { fetchCategories } from '../actions/categories.js'
 import { createPost, updatePost } from '../actions/posts.js'
 
-import '../styles/CreatePostModal.css'
+import '../styles/PostModal.css'
 
-class CreatePostModal extends Component {
+class PostModal extends Component {
   static propTypes = {
-    closeCreatePostModal: PropTypes.func.isRequired,
-    status: PropTypes.bool.isRequired
+    closePostModal: PropTypes.func.isRequired,
+    status: PropTypes.bool.isRequired,
+    mode: PropTypes.string.isRequired,
+    data: PropTypes.object
   }
 
   state = {
@@ -29,7 +31,7 @@ class CreatePostModal extends Component {
   handleSubmit = (e) => {
 		e.preventDefault()
 
-    const { createPost, updatePost, closeCreatePostModal, mode, data } = this.props
+    const { createPost, updatePost, closePostModal, mode, data } = this.props
     const values = serializeForm(e.target, { hash: true })
 
     if ((mode === 'add' && values.category !== 'none' && values.title && values.body && values.author) || (mode === 'edit' && values.title && values.body)) {
@@ -44,7 +46,7 @@ class CreatePostModal extends Component {
         updatePost(values)
       }
 
-      closeCreatePostModal()
+      closePostModal()
     }
     else {
       this.setState(() => ({ showError: true }))
@@ -52,7 +54,7 @@ class CreatePostModal extends Component {
 	}
 
   render() {
-		const { status, closeCreatePostModal, categories, data, mode } = this.props
+		const { status, closePostModal, categories, data, mode } = this.props
 		const { showError } = this.state
 
     let selectValue = 'none'
@@ -62,7 +64,7 @@ class CreatePostModal extends Component {
       <ReactModal
           overlayClassName='overlay'
           isOpen={status}
-          onRequestClose={closeCreatePostModal}
+          onRequestClose={closePostModal}
           contentLabel='Modal'
         >
           <div className="create-post-modal-content">
@@ -120,7 +122,7 @@ class CreatePostModal extends Component {
 
               <div className="field is-grouped">
                 <div className="control">
-                  <button onClick={() => closeCreatePostModal()} type="button" className="button is-link">Cancel</button>
+                  <button onClick={() => closePostModal()} type="button" className="button is-link">Cancel</button>
                 </div>
                 <div className="control">
                   <button type="submit" className="button is-primary">
@@ -153,4 +155,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreatePostModal)
+)(PostModal)

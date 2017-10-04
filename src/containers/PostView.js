@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Link, Redirect } from 'react-router-dom';
-import _ from 'lodash'
-import ReactModal from 'react-modal'
+import { Redirect } from 'react-router-dom';
 import moment from 'moment'
 
 import { fetchPost, deletePost } from '../actions/posts.js'
 
-import CreatePostModal from '../containers/CreatePostModal'
+import PostModal from '../containers/PostModal'
 import CommentsList from '../containers/CommentsList'
 import PostVoter from '../containers/PostVoter'
 
@@ -47,9 +45,10 @@ class PostView extends Component {
   render() {
 		const { posts, match } = this.props
 		const { editPostModalOpened, redirectOnDelete } = this.state
+		let post = {}
 
-		let post = posts.filter((post) => post.id === match.params.postId)
-		if (post.length > 0) post = post[0]
+		let filteredPosts = posts.filter((post) => post.id === match.params.postId)
+		if (filteredPosts.length > 0) post = filteredPosts[0]
 
     return (
 			<div>
@@ -75,6 +74,8 @@ class PostView extends Component {
 							</div>
 							<div className="media-content"></div>
 							<div className="media-right">
+								<a className="button is-small is-success" onClick={() => this.openEditPostModal()}>Edit</a>
+ 								<a className="button is-small is-link" onClick={() => this.deletePost()}>Delete</a>
 							</div>
 						</article>
 
@@ -96,8 +97,7 @@ class PostView extends Component {
 
 						<CommentsList postId={post.id}></CommentsList>
 
-						<CreatePostModal status={editPostModalOpened} closeCreatePostModal={this.closeEditPostModal} data={post} mode="edit"></CreatePostModal>
-
+						<PostModal status={editPostModalOpened} closePostModal={this.closeEditPostModal} data={post} mode="edit"></PostModal>
 					</div>
 				</section>
 			</div>

@@ -7,7 +7,7 @@ import moment from 'moment'
 import { deletePost } from '../actions/posts.js'
 
 import PostVoter from '../containers/PostVoter'
-import CreatePostModal from '../containers/CreatePostModal'
+import PostModal from '../containers/PostModal'
 
 class PostsList extends Component {
   static propTypes = {
@@ -32,8 +32,6 @@ class PostsList extends Component {
   render() {
 		const { posts } = this.props
 		const { selectedPost, editPostModalOpened } = this.state
-
-    var post
 
     return (
 			<section className="section">
@@ -60,7 +58,7 @@ class PostsList extends Component {
 						</div>
 					))}
 
-          <CreatePostModal status={editPostModalOpened} closeCreatePostModal={this.closeEditPostModal} data={selectedPost} mode="edit"></CreatePostModal>
+          <PostModal status={editPostModalOpened} closePostModal={this.closeEditPostModal} data={selectedPost} mode="edit"></PostModal>
 
 				</div>
 			</section>

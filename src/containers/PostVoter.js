@@ -7,6 +7,10 @@ import { votePost } from '../actions/posts.js'
 import '../styles/Voter.css'
 
 class PostVoter extends Component {
+  static propTypes = {
+    voteScore: PropTypes.number,
+    postId: PropTypes.string
+  }
 
   render() {
     const { voteScore, postId, votePost } = this.props
