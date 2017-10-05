@@ -38,8 +38,8 @@ Readable is distributed under the MIT license.
 
 ## Screenshots
 
-![Posts Overview](src/images/documentation/Post%20Overview.png)
+![Posts Overview](src/images/documentation/Posts%20Overview.png)
 
-![Post Detail](src/images/documentation/Post%20Detail%20.png)
+![Post Detail](src/images/documentation/Post%20Detail.png)
 
 ![Create Post Modal](src/images/documentation/Create%20Post%20Modal.png)
