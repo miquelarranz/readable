@@ -1,4 +1,5 @@
 import * as PostsAPI from '../utils/PostsAPI';
+import * as CommentsAPI from '../utils/CommentsAPI';
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const EDIT_UPDATED_POST = 'EDIT_UPDATED_POST'
@@ -13,13 +14,46 @@ export const receivePosts = posts => ({
 export const fetchPosts = () => dispatch => (
   PostsAPI
       .fetchPosts()
-      .then(posts => dispatch(receivePosts(posts)))
+      .then(posts => {
+        let promises = posts.map((post) => {
+          post.comments = 0;
+          return CommentsAPI.fetchComments(post.id)
+        })
+
+        Promise.all(promises).then((commentGroups) => {
+          commentGroups.forEach((commentGroup) => {
+            if (commentGroup.length > 0) {
+              let postId = commentGroup[0].parentId
+              posts.forEach((post) => {
+                if (post.id === postId) post.comments = commentGroup.length
+              })
+            }
+          })
+
+          dispatch(receivePosts(posts))
+        });
+      })
 );
 
 export const fetchPostsByCategory = (category) => dispatch => (
   PostsAPI
       .fetchPostsByCategory(category)
-      .then(posts => dispatch(receivePosts(posts)))
+      .then(posts => {
+        let promises = posts.map((post) => CommentsAPI.fetchComments(post.id))
+
+        Promise.all(promises).then((commentGroups) => {
+          commentGroups.forEach((commentGroup) => {
+            if (commentGroup.length > 0) {
+              let postId = commentGroup[0].parentId
+              posts.forEach((post) => {
+                if (post.id === postId) post.comments = commentGroup.length
+              })
+            }
+          })
+
+          dispatch(receivePosts(posts))
+        })
+      })
 );
 
 export const receivePost = post => ({
@@ -36,7 +70,10 @@ export const fetchPost = (postId) => dispatch => (
 export const createPost = (post) => dispatch => (
   PostsAPI
       .createPost(post)
-      .then(post => dispatch(receivePost(post)))
+      .then(post => {
+        post.comments = 0
+        dispatch(receivePost(post))
+      })
 );
 
 export const editUpdatedPost = post => ({

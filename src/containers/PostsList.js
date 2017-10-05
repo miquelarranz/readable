@@ -52,7 +52,7 @@ class PostsList extends Component {
 						      </div>
 						    </div>
 								<div className="media-right">
-						       <small className="has-text-grey-light"><a onClick={() => this.openEditPostModal(post)}>Edit</a> · <a onClick={() => this.deletePost(post.id)}>Delete</a> · {moment(post.timestamp).fromNow()}</small>
+						       <small className="has-text-grey-light"><i className="fa fa-comments has-text-primary" aria-hidden="true"></i> {post.comments} · <a onClick={() => this.openEditPostModal(post)}>Edit</a> · <a onClick={() => this.deletePost(post.id)}>Delete</a> · {moment(post.timestamp).fromNow()}</small>
 						    </div>
 						  </article>
 						</div>
