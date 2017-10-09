@@ -6,7 +6,7 @@ It allows you to create, edit, delete and update posts and manage the comments o
 
 The project has been developed using [React]('https://facebook.github.io/react/') and [Bulma](http://bulma.io/).
 
-***Important.** The project uses a [backend]('https://github.com/udacity/reactnd-project-readable-starter') provided by the **Udacity** teachers. If you want access to the project and use it, contact me first.*
+**Important.** The project uses a [backend]('https://github.com/udacity/reactnd-project-readable-starter') provided by the **Udacity** teachers. If you want access to the project and use it, contact me first.
 
 ## Installation
 
