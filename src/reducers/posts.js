@@ -11,10 +11,23 @@ export default function categories (state = [], action) {
       return action.posts
 
     case RECEIVE_POST:
-      return [
-        ...state,
-        action.post
-      ]
+      let candidatePosts = state.filter((post) => post.id === action.post.id)
+
+      if (candidatePosts.length > 0) {
+        return state.map((post, index) => {
+          if(post.id !== action.post.id) return post;
+          return {
+              ...post,
+              ...action.post
+          };
+        });
+      }
+      else {
+        return [
+          ...state,
+          action.post
+        ]
+      }
 
     case REMOVE_POST:
       return state.filter((post) => post.id !== action.post.id)
