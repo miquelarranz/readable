@@ -6,7 +6,7 @@ It allows you to create, edit, delete and update posts and manage the comments o
 
 The project has been developed using [React]('https://facebook.github.io/react/') and [Bulma](http://bulma.io/).
 
-***Important.** The project uses a backend provided by the **Udacity** teachers. If you want access to the project and use it, contact me first.*
+***Important.** The project uses a [backend]('https://github.com/udacity/reactnd-project-readable-starter') provided by the **Udacity** teachers. If you want access to the project and use it, contact me first.*
 
 ## Installation
 
@@ -18,12 +18,26 @@ $ cd readable
 $ npm install
 ```
 
+For the server, you need to follow the next steps:
+
+```
+$ git clone https://github.com/udacity/reactnd-project-readable-starter.git
+$ cd reactnd-project-readable-starter/api-server
+$ npm install
+```
+
 ## Usage
 
-Once you have installed the project in your local machine, you need to run the React environment with the following command:
+Once you have installed the frontend project in your local machine, you need to run the React environment with the following command:
 
 ```
 npm start
+```
+
+In order to run the server, you need the following command:
+
+```
+node server
 ```
 
 If you want to modify the styles, the app uses Sass as CSS preprocessor, so you need to run it as well if you want to see your changes (it generates the CSS files automatically).
